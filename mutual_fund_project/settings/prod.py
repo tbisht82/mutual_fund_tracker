@@ -4,6 +4,8 @@ import dj_database_url
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+ALLOWED_HOSTS = ['mutual-fund-tracker.herokuapp.com']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'ubiz6%-20291r8-$x5*k#0=xgyy=b*7!68(aa4zd%in4h0k=gc'
 
