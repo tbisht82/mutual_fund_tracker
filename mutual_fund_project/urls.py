@@ -5,6 +5,7 @@ from . import views
 from django.conf.urls import handler404
 
 urlpatterns = [
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('mutualfunds/', include('mutual_fund_track.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
