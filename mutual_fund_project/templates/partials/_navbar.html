@@ -1,0 +1,22 @@
+{% load static %}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+        aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav" style="margin-left:2%;">
+            <li {% if 'new' in request.path %} class="nav-item active mr-3" hidden {% else %} class="nav-item mr-3"
+                {% endif %}>
+                <a class="nav-link" href="{% url 'new_isin' %}">Add New</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin-left:auto;margin-right:2%;" action="{% url 'search_isin' %}">
+            <input class="form-control mr-sm-2" type="search" name="isin" placeholder="Search ISIN" aria-label="Search"
+                required oninvalid="this.setCustomValidity('Please Enter valid ISIN')" oninput="setCustomValidity('')">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>

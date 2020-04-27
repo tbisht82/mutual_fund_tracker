@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row" style="margin-top: 1%;">
+    <div class="col-md-12">
+        <div class="card-header">
+            <h3 class="mb-0">Mutual Fund Details:</h3>
+            <h5 style="margin-top: 1%;"><strong>Name of Mutual fund: </strong></h5>
+            {% if mutual_fund.name != None %}
+            <p>{{mutual_fund.name}}</p>
+            {% else %}
+            <p>-</p>
+            {% endif %}
+            <h5 style="margin-top: 1%;"><strong>ISIN of Mutual Fund: </strong></h5> {{mutual_fund.ISIN}}
+        </div>
+        {% if all_years != False %}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Performance Chart:</strong></h4>
+                </div>
+                <div class="col-md-6">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="form-group">
+                            <label for="from">From Year:&nbsp</label>
+                            <select class="form-control" id="from">
+                                {% for year in all_years %}
+                                <option value={{year}}>{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-left: 5%;">
+                            <label for="to">To Year:&nbsp</label>
+                            <select class="form-control" id="to">
+                                {% for year in all_years %}
+                                <option value={{year}}>{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="button"
+                            onclick="return getYearsValue()" id="generate_chart"
+                            style="margin-left: 5%;">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <hr />
+            <canvas id="canvas" data-url="{% url 'chart_data' mutual_fund.ISIN %}"></canvas>
+        </div>
+        {% else %}
+        <div class="col-md-6 offset-md-3 alert alert-danger" style="margin-top: 10%; text-align: center;">
+            No Data Available For This ISIN. Please Search Other ISIN.
+        </div>
+        {% endif %}
+        <div style="margin-top: 2%;">
+            {% include 'partials/_alerts.html' %}
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var from_year = document.getElementById("from");
+    var to_year = document.getElementById("to");
+    var selectLastValueFun = function () {
+        var lastValue = from_year.options[from_year.options.length - 1].value;
+        from_year.value = lastValue;
+        lastValue = to_year.options[to_year.options.length - 1].value;
+        to_year.value = lastValue;
+    };
+
+    function getYearsValue() {
+        let start = from_year.value;
+        let end = to_year.value;
+        if (end < start) {
+            alert("end year can not be lesser than start year");
+            selectLastValueFun();
+            myClickFun();
+            return false;
+        }
+        myClickFun();
+        return true;
+    }
+
+    $(document).ready(function () {
+        selectLastValueFun();
+        myClickFun();
+    });
+
+    var myClickFun = function () {
+        var start = document.getElementById("from").value;
+        var end = document.getElementById("to").value;
+        console.log(start);
+        console.log(end);
+        var $mutualFundValueChart = $("#canvas");
+        new_url = $mutualFundValueChart.data("url") + "-" + start + "-" + end;
+        $.ajax({
+            url: new_url,
+            success: function (data) {
+                var ctx = $mutualFundValueChart[0].getContext("2d");
+                if (window.myLineChart) {
+                    window.myLineChart.destroy();
+                }
+                window.myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'NAV',
+                            fill: false,
+                            radius: 1.5,
+                            borderColor: 'green',
+                            backgroundColor: 'red',
+                            data: data.data
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Mutual Fund NAV Chart for ' + start + ' to ' + end
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Value'
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function () {
+                alert('data can not be fatched for the given isin');
+            }
+        });
+    };
+</script>
+{% endblock %}

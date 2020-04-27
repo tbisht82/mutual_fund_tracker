@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row" style="margin-top: 5%;">
+    <div class="col-md-6 offset-md-3">
+        <div class="card card-outline-secondary">
+            <div class="card-header">
+                <h3 class="mb-0">Add New ISIN</h3>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off" id="newisin" novalidate="" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="fieldWrapper form-group">
+                        <label for="isin">Mutual Fund ISIN</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Save</button>
+                </form>
+            </div>
+        </div>
+        <div style="margin-top: 5%;">
+            {% include 'partials/_alerts.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
