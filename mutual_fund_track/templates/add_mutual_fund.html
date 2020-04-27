@@ -23,13 +23,12 @@
 
 
         <div>
-            {% for item in mf %}
-                <p>{{item}}</p>
-            {% endfor %}
+            {{mf.ISIN}}
+            {{mf.name}}
             <p>{{mfvc}}</p>
         </div>
 
-        <a href="{% url 'delete' %}">Delete</a>>
+        <a href="{% url 'delete' %}">Delete</a>
 
 
         <div style="margin-top: 5%;">
