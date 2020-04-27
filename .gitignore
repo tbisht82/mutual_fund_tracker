@@ -10,7 +10,7 @@
 __pycache__/
 db.sqlite3
 db.sqlite3-journal
-static
+/static
 local_settings.py
 venv
 
