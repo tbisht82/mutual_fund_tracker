@@ -6,4 +6,5 @@ urlpatterns = [
     path('detail/<str:isin>', views.detail_isin, name='details_isin'),
     path('search', views.search, name='search_isin'),
     path('chart/<str:isin>', views.chart_data, name='chart_data'),
+    path('delete', views.delete, name='delete')
 ]

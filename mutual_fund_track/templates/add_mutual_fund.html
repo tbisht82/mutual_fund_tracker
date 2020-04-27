@@ -19,6 +19,19 @@
                 </form>
             </div>
         </div>
+
+
+
+        <div>
+            {% for item in mf %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <p>{{mfvc}}</p>
+        </div>
+
+        <a href="{% url 'delete' %}">Delete</a>>
+
+
         <div style="margin-top: 5%;">
             {% include 'partials/_alerts.html' %}
         </div>
