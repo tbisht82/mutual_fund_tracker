@@ -19,16 +19,8 @@ def add_new_isin(request):
             messages.success(request, 'Mutual fund ISIN added successfully')
         else:
             messages.error(request, form.errors.get('ISIN')[0])
-    
-    mf = MutualFund.objects.get(ISIN='INF204K01HY3')
-    print(mf)
-    mfvc = MutualFundValue.objects.filter(mutual_fund=mf).count()
-    print(mfvc)
 
-    context = {'form': MutualFundForm,
-            'mf': mf,
-            'mfvc': mfvc
-        }
+    context = {'form': MutualFundForm}
     return render(request, 'add_mutual_fund.html', context)
 
 
@@ -110,11 +102,3 @@ def search(request):
     isin = request.GET['isin']
     print(isin)
     return redirect('details_isin', isin=isin)
-
-
-def delete(request):
-    mf = MutualFund.objects.get(ISIN='INF204K01HY3')
-    mfvc = MutualFundValue.objects.filter(mutual_fund=mf).last()
-
-    mfvc.delete()
-    return redirect('new_isin')
