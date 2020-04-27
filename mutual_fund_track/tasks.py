@@ -25,5 +25,5 @@ def task_save_new_mutual_funds():
 
 @task()
 def update_mutual_fund_values():
-    save_new_mutual_fund_values(logger)
+    save_new_mutual_fund_values()
     logger.info("updated new fund values in db")
