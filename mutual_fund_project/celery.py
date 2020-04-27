@@ -3,7 +3,8 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.prod')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.dev')
 
 app = Celery('mutual_fund_project')
 

@@ -11,6 +11,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.prod')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mutual_fund_project.settings.dev')
 
 application = get_asgi_application()
