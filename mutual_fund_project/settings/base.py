@@ -122,10 +122,10 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_BEAT_SCHEDULE = {
     'save_new_data_to_db_task': {
         'task': 'mutual_fund_track.tasks.task_save_new_mutual_funds',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute=0, hour='8, 20'),
     },
     'update_new_mutual_fund_values': {
         'task': 'mutual_fund_track.tasks.update_mutual_fund_values',
-        'schedule': crontab(minute='*/2'),
+        'schedule': crontab(minute=0, hour='18'),
     },
 }
