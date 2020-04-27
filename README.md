@@ -22,7 +22,7 @@ celery -A mutual_fund_project worker -B -l INFO
 This url will automatically redirect the user to http://127.0.0.1:xxxx/mutualfunds/new/
 2. http://127.0.0.1:xxxx/mutualfunds/new/
 This url will display a form where we can add new ISIN to the DB
-3. http://127.0.0.1:xxxx/mutualfunds/detail/<ISIN>
+3. http://127.0.0.1:xxxx/mutualfunds/detail/{ISIN}
 This url will show the historical data chart for provided ISIN
 
 # Herouk URL:
